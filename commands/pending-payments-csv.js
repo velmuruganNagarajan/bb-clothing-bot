@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, AttachmentBuilder } from 'discord.js';
 import { config } from 'dotenv';
-import { getPendingPaymentsReport } from '../../services/reportService.js';
+import { getPendingPaymentsReport } from '../services/reportService.js';
 
 config();
 
