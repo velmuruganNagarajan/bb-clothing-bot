@@ -32,8 +32,8 @@ WITH pending_order_payments AS (
     LEFT JOIN user_addresses ua ON ua.id = o.shipping_address_id
     WHERE p.status = 'PENDING'
       AND p.payment_method <> 'COD'
-      -- optional safety if payment_method can be NULL:
       AND p.payment_method IS NOT NULL
+      AND o.status = 'PLACED'
 )
 SELECT
     pop.order_id,
