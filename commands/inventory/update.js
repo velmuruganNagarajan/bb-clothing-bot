@@ -46,7 +46,7 @@ export default {
             const stockQuantity = interaction.options.getInteger('stock-quantity');
             const reservedQuantity = interaction.options.getInteger('reserved-quantity');
 
-            if (!stockQuantity && !reservedQuantity) {
+            if (stockQuantity === null && reservedQuantity === null) {
                 return await interaction.editReply({
                     content: `❌ Please provide either stock quantity or reserved quantity.`,
                 });
