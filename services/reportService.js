@@ -10,14 +10,11 @@ WITH pending_order_payments AS (
         o.order_number,
         o.status AS order_status,
         o.payment_status AS order_payment_status,
-        p.id AS payment_id,
         p.status AS payment_status,
         p.payment_method,
         p.amount,
-        u.id AS user_id,
         u.name,
         u.email,
-        ua.id AS shipping_address_id,
         ua.address_line1,
         ua.address_line2,
         ua.city,
@@ -34,20 +31,20 @@ WITH pending_order_payments AS (
     JOIN users u ON u.id = o.user_id
     LEFT JOIN user_addresses ua ON ua.id = o.shipping_address_id
     WHERE p.status = 'PENDING'
+      AND p.payment_method <> 'COD'
+      -- optional safety if payment_method can be NULL:
+      AND p.payment_method IS NOT NULL
 )
 SELECT
     pop.order_id,
     pop.order_number,
     pop.order_status,
     pop.order_payment_status,
-    pop.payment_id,
     pop.payment_status,
     pop.payment_method,
     pop.amount AS payment_amount,
-    pop.user_id,
     pop.name,
     pop.email,
-    pop.shipping_address_id,
     pop.address_line1,
     pop.address_line2,
     pop.city,
@@ -94,14 +91,11 @@ GROUP BY
     pop.order_number,
     pop.order_status,
     pop.order_payment_status,
-    pop.payment_id,
     pop.payment_status,
     pop.payment_method,
     pop.amount,
-    pop.user_id,
     pop.name,
     pop.email,
-    pop.shipping_address_id,
     pop.address_line1,
     pop.address_line2,
     pop.city,
